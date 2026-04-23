@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>24時間 安全施工サイクル時計</title>
+    <style>
+        body {
+            background-color: #222; /* 背景を少し暗くして時計を際立たせる */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .clock-container {
+            position: relative;
+            width: 95vh;
+            height: 95vh;
+        }
+        /* 画像をすべて中央に重ねる設定 */
+        .clock-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transform-origin: center center; /* 中心を軸に回転 */
+        }
+    </style>
+</head>
+<body>
+
+<div class="clock-container">
+    <img src="dial.jpg" id="dial"> <img src="hour.png" id="hour-hand"> <img src="minute.png" id="minute-hand"> <img src="second.png" id="second-hand"> </div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        const h = now.getHours();
+        const m = now.getMinutes();
+        const s = now.getSeconds();
+
+        // 24時間計の計算：360度 ÷ 24時間 = 1時間あたり15度回転
+        const hDeg = (h * 15) + (m / 60) * 15;
+        // 長針・秒針は通常通り（1周60分/60秒）
+        const mDeg = m * 6;
+        const sDeg = s * 6;
+
+        document.getElementById('hour-hand').style.transform = `rotate(${hDeg-195}deg)`;
+        document.getElementById('minute-hand').style.transform = `rotate(${mDeg}deg)`;
+        document.getElementById('second-hand').style.transform = `rotate(${sDeg}deg)`;
+    }
+
+    // 1秒ごとに更新
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
+
+</body>
+</html>
